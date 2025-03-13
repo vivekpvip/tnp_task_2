@@ -64,7 +64,6 @@ func CreateCertificate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
 	if err := DB.Create(&newCertificate).Error; err != nil {
 		http.Error(w, "Error creating certificate", http.StatusInternalServerError)
 		return
@@ -166,7 +165,6 @@ func SendBulkEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
 	for _, email := range request.Emails {
 		err := sendEmail(email, request.Content)
 		if err != nil {
@@ -204,10 +202,8 @@ func AuthMiddleware(next http.Handler) http.Handler {
 func main() {
 	
 	InitDB()
-
 	r := mux.NewRouter()
 
-	
 	r.Handle("/certificates/{id}", AuthMiddleware(http.HandlerFunc(GetCertificateByID))).Methods("GET")
 	r.Handle("/certificates", AuthMiddleware(http.HandlerFunc(CreateCertificate))).Methods("POST")
 	r.Handle("/certificates", AuthMiddleware(http.HandlerFunc(GetAllCertificates))).Methods("GET")
@@ -215,6 +211,5 @@ func main() {
 	r.Handle("/send/{id}", AuthMiddleware(http.HandlerFunc(SendCertificate))).Methods("POST")
 	r.Handle("/send_bulk", AuthMiddleware(http.HandlerFunc(SendBulkEmail))).Methods("POST")
 
-	
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
