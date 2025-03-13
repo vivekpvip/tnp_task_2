@@ -10,12 +10,12 @@ A Certificate model is defined with fields such as ID, Name, Content, Owner, and
 
  # API Endpoints:
 
- GET /certificates/{id}: Retrieves a certificate by its ID.
- POST /certificates: Creates a new certificate.
- GET /certificates: Retrieves all certificates.
- PUT /certificates/{id}: Updates a certificate by ID.
- POST /send/{id}: Sends a specific certificate to an email.
- POST /send_bulk: Sends bulk emails with a custom message/content.
+• GET /certificates/{id}: Retrieves a certificate by its ID.
+• POST /certificates: Creates a new certificate.
+• GET /certificates: Retrieves all certificates.
+• PUT /certificates/{id}: Updates a certificate by ID.
+• POST /send/{id}: Sends a specific certificate to an email.
+• POST /send_bulk: Sends bulk emails with a custom message/content.
 
  # Authentication:
 A basic authentication middleware (AuthMiddleware) is implemented using Bearer token to ensure that only authorized users can access the endpoints.
