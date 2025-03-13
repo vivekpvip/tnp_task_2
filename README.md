@@ -53,6 +53,22 @@ This solution is unique because:
 Overall, the project was an interesting challenge. I learned how to add security to our api and controller and most of new things.
 
 
+# DIRECTORY STRUCTURE 
+/certificate-app
+  ├── go.mod
+  ├── cmd/
+  │   └── main.go
+  ├── handlers/
+  │   ├── certificate.go
+  │   └── email.go
+  |   |__ auth.go
+  ├── models/
+  │   └── certificate.go
+  ├── utils/
+  │   └── db.go
+  
+
+
 
 
 
