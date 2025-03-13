@@ -64,7 +64,7 @@ func CreateCertificate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Save the new certificate in the database
+	
 	if err := DB.Create(&newCertificate).Error; err != nil {
 		http.Error(w, "Error creating certificate", http.StatusInternalServerError)
 		return
@@ -106,13 +106,13 @@ func UpdateCertificate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Update fields
+	
 	certificate.Name = updatedCertificate.Name
 	certificate.Content = updatedCertificate.Content
 	certificate.Owner = updatedCertificate.Owner
 	certificate.Date = updatedCertificate.Date
 
-	// Save updated certificate in the database
+
 	if err := DB.Save(&certificate).Error; err != nil {
 		http.Error(w, "Error updating certificate", http.StatusInternalServerError)
 		return
@@ -132,21 +132,21 @@ func SendCertificate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fetch certificate from DB
+	
 	var certificate Certificate
 	if err := DB.First(&certificate, id).Error; err != nil {
 		http.Error(w, "Certificate not found", http.StatusNotFound)
 		return
 	}
 
-	// Set up the email message
+	
 	mailer := gomail.NewMessage()
 	mailer.SetHeader("From", "your_email@gmail.com")
 	mailer.SetHeader("To", request.Email)
 	mailer.SetHeader("Subject", "Your Certificate: "+certificate.Name)
 	mailer.SetBody("text/plain", "Here is your certificate!")
 
-	// Set up the SMTP server
+	// smtp server setup
 	dialer := gomail.NewDialer("smtp.gmail.com", 587, "your_email@gmail.com", "your_email_password")
 	if err := dialer.DialAndSend(mailer); err != nil {
 		http.Error(w, "Error sending email", http.StatusInternalServerError)
@@ -166,7 +166,7 @@ func SendBulkEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Send emails to each recipient
+	
 	for _, email := range request.Emails {
 		err := sendEmail(email, request.Content)
 		if err != nil {
@@ -202,12 +202,12 @@ func AuthMiddleware(next http.Handler) http.Handler {
 }
 
 func main() {
-	// Initialize the database
+	
 	InitDB()
 
 	r := mux.NewRouter()
 
-	// Define routes
+	
 	r.Handle("/certificates/{id}", AuthMiddleware(http.HandlerFunc(GetCertificateByID))).Methods("GET")
 	r.Handle("/certificates", AuthMiddleware(http.HandlerFunc(CreateCertificate))).Methods("POST")
 	r.Handle("/certificates", AuthMiddleware(http.HandlerFunc(GetAllCertificates))).Methods("GET")
@@ -215,6 +215,6 @@ func main() {
 	r.Handle("/send/{id}", AuthMiddleware(http.HandlerFunc(SendCertificate))).Methods("POST")
 	r.Handle("/send_bulk", AuthMiddleware(http.HandlerFunc(SendBulkEmail))).Methods("POST")
 
-	// Start the server
+	
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
