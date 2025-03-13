@@ -4,7 +4,7 @@ This project implements a Certificate Management System using Go and PostgreSQL.
 # Approach to the Solution
 The solution follows a structured approach to handle various operations related to certificates. The main components are as follows:
 
-1. ** Database Setup**:
+1. # Database Setup:
 A PostgreSQL database is used to store certificates. The gorm package is used as an ORM to interact with the database.
 A Certificate model is defined with fields such as ID, Name, Content, Owner, and Date.
 
@@ -17,10 +17,10 @@ A Certificate model is defined with fields such as ID, Name, Content, Owner, and
 5. POST /send/{id}: Sends a specific certificate to an email.
 6. POST /send_bulk: Sends bulk emails with a custom message/content.
 
-3. Authentication:
+3. # Authentication:
 A basic authentication middleware (AuthMiddleware) is implemented using Bearer token to ensure that only authorized users can access the endpoints.
 
-4.Email Sending:
+4. # Email Sending:
 The gomail package is used to send certificates via email.
 Individual certificate emails are sent using the SendCertificate handler, and bulk emails are handled by the SendBulkEmail handler.
 
